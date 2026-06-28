@@ -1,0 +1,5 @@
+export const system = {
+  shutdown: "shutdown /s /t 0",
+  restart: "shutdown /r /t 0",
+  lock: "rundll32.exe user32.dll,LockWorkStation",
+};
