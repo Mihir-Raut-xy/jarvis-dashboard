@@ -3,40 +3,28 @@ import si from "systeminformation";
 
 export async function GET() {
   try {
-    console.log("Starting system API...");
-
-    console.log("CPU...");
-    const cpuLoad = await si.currentLoad();
-    console.log("✓ CPU");
-
-    console.log("Memory...");
-    const mem = await si.mem();
-    console.log("✓ Memory");
-
-    console.log("Battery...");
-    const battery = await si.battery();
-    console.log("✓ Battery");
-
-    console.log("Network...");
-    const network = await si.networkInterfaces();
-    console.log("✓ Network");
-
-    console.log("Time...");
-    const time = await si.time();
-    console.log("✓ Time");
+    const [cpuLoad, mem, battery, network] = await Promise.all([
+      si.currentLoad(),
+      si.mem(),
+      si.battery(),
+      si.networkInterfaces(),
+    ]);
 
     return NextResponse.json({
-      cpu: cpuLoad.currentLoad.toFixed(1),
-      ram: ((mem.used / mem.total) * 100).toFixed(1),
-      battery: battery.hasBattery ? battery.percent : "Desktop",
+      cpu: Number(cpuLoad.currentLoad.toFixed(1)),
+      ram: Number(((mem.used / mem.total) * 100).toFixed(1)),
+      battery: battery.hasBattery ? Number(battery.percent.toFixed(1)) : null,
       online: network.some((n) => n.operstate === "up"),
-      uptime: time.uptime,
     });
-  } catch (err) {
-    console.error(err);
-
+  } catch (error) {
     return NextResponse.json(
-      { error: err.message },
+      {
+        cpu: 0,
+        ram: 0,
+        battery: null,
+        online: false,
+        error: error instanceof Error ? error.message : "System info unavailable",
+      },
       { status: 500 }
     );
   }

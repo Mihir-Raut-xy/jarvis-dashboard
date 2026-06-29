@@ -27,7 +27,7 @@ export default function CoreHousing() {
         </linearGradient>
 
         <filter id="glow">
-          <feGaussianBlur stdDeviation="6" result="blur" />
+          <feGaussianBlur stdDeviation="5" result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
             <feMergeNode in="SourceGraphic" />
@@ -35,137 +35,44 @@ export default function CoreHousing() {
         </filter>
       </defs>
 
-      {/* Outer Ring */}
-      <circle
-        cx="350"
-        cy="350"
-        r="250"
-        fill="url(#metal)"
-        stroke="#22d3ee55"
-        strokeWidth="6"
-      />
+      <circle cx="350" cy="350" r="242" fill="url(#metal)" stroke="#22d3ee55" strokeWidth="5" />
+      <circle cx="350" cy="350" r="220" fill="#111827" stroke="#334155" strokeWidth="3" />
 
-      <circle
-        cx="350"
-        cy="350"
-        r="228"
-        fill="#111827"
-        stroke="#334155"
-        strokeWidth="4"
-      />
-
-      {/* Mechanical Segments */}
       {[...Array(12)].map((_, i) => {
         const angle = i * 30;
-
         return (
-          <g
-            key={i}
-            transform={`rotate(${angle} 350 350)`}
-          >
-            <rect
-              x="334"
-              y="54"
-              width="32"
-              height="82"
-              rx="8"
-              fill="url(#metal)"
-              stroke="#22d3ee44"
-            />
-
-            <rect
-              x="343"
-              y="70"
-              width="14"
-              height="44"
-              fill="url(#cyanLine)"
-              filter="url(#glow)"
-            />
+          <g key={i} transform={`rotate(${angle} 350 350)`}>
+            <rect x="338" y="52" width="24" height="76" rx="8" fill="url(#metal)" stroke="#22d3ee33" />
+            <rect x="344" y="68" width="12" height="40" fill="url(#cyanLine)" filter="url(#glow)" />
           </g>
         );
       })}
 
-      {/* Hex Chamber */}
       <polygon
-        points="
-350,175
-500,262
-500,438
-350,525
-200,438
-200,262
-"
+        points="350,182 490,264 490,436 350,518 210,436 210,264"
         fill="#0f172a"
         stroke="#22d3ee"
-        strokeWidth="4"
-      />
-
-      <polygon
-        points="
-350,210
-470,280
-470,420
-350,490
-230,420
-230,280
-"
-        fill="#020617"
-        stroke="#334155"
         strokeWidth="3"
       />
 
-      {/* Mechanical Braces */}
-      <line
-        x1="350"
-        y1="100"
-        x2="350"
-        y2="210"
-        stroke="#475569"
-        strokeWidth="8"
+      <polygon
+        points="350,220 462,286 462,414 350,480 238,414 238,286"
+        fill="#020617"
+        stroke="#334155"
+        strokeWidth="2"
       />
 
-      <line
-        x1="350"
-        y1="490"
-        x2="350"
-        y2="600"
-        stroke="#475569"
-        strokeWidth="8"
-      />
+      <line x1="350" y1="104" x2="350" y2="206" stroke="#475569" strokeWidth="6" />
+      <line x1="350" y1="494" x2="350" y2="596" stroke="#475569" strokeWidth="6" />
+      <line x1="104" y1="350" x2="206" y2="350" stroke="#475569" strokeWidth="6" />
+      <line x1="494" y1="350" x2="596" y2="350" stroke="#475569" strokeWidth="6" />
 
-      <line
-        x1="100"
-        y1="350"
-        x2="210"
-        y2="350"
-        stroke="#475569"
-        strokeWidth="8"
-      />
+      {[45, 135, 225, 315].map((deg) => {
+        const r = 210;
+        const x = 350 + Math.cos((deg * Math.PI) / 180) * r;
+        const y = 350 + Math.sin((deg * Math.PI) / 180) * r;
 
-      <line
-        x1="490"
-        y1="350"
-        x2="600"
-        y2="350"
-        stroke="#475569"
-        strokeWidth="8"
-      />
-
-      {/* Bolts */}
-      {[45,135,225,315].map((deg) => {
-        const r = 215;
-        const x = 350 + Math.cos((deg*Math.PI)/180)*r;
-        const y = 350 + Math.sin((deg*Math.PI)/180)*r;
-
-        return (
-          <circle
-            key={deg}
-            cx={x}
-            cy={y}
-            r="9"
-            fill="#94a3b8"
-          />
-        );
+        return <circle key={deg} cx={x} cy={y} r="8" fill="#94a3b8" />;
       })}
     </motion.svg>
   );

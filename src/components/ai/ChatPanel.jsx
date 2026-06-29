@@ -1,30 +1,87 @@
 export default function ChatPanel() {
   return (
-    <div className="flex h-full flex-col">
-
-      <div className="border-b border-cyan-500/20 p-5">
-        <h2 className="text-xl font-bold text-cyan-400">
-          JARVIS Chat
-        </h2>
+    <section className="glass-panel chat-panel">
+      <div className="panel-header">
+        <h2 className="panel-title">AI CHAT</h2>
+        <button className="panel-pill" type="button">
+          + New Chat
+        </button>
       </div>
 
-      <div className="flex-1 p-6">
-        <div className="rounded-xl bg-cyan-500/10 p-4">
-          Hello, Mihir.
+      <div className="chat-body">
+        <div className="msg-row">
+          <div className="core-dot" />
+          <div className="msg-bubble">
+            <div>Hello, Mihir.</div>
+            <div>How can I assist you today?</div>
+            <div className="msg-time">07:40 PM</div>
+          </div>
         </div>
 
-        <div className="mt-4 rounded-xl bg-white/5 p-4">
-          I'm online and ready.
+        <div className="msg-row user">
+          <div className="msg-bubble user">
+            <div>Show me system status</div>
+            <div className="msg-time">07:40 PM ✓✓</div>
+          </div>
+        </div>
+
+        <div className="msg-row">
+          <div className="core-dot" />
+          <div className="msg-bubble">
+            <div>Here is your system status.</div>
+            <div className="msg-time">07:40 PM</div>
+          </div>
+        </div>
+
+        <div className="system-card">
+          <div className="system-item">
+            <div className="system-left">
+              <span>▣</span>
+              <span>CPU Usage</span>
+            </div>
+            <strong style={{ color: "#3ad7ff" }}>18%</strong>
+          </div>
+
+          <div className="system-item">
+            <div className="system-left">
+              <span>▦</span>
+              <span>RAM Usage</span>
+            </div>
+            <strong style={{ color: "#44e29b" }}>46%</strong>
+          </div>
+
+          <div className="system-item">
+            <div className="system-left">
+              <span>🔋</span>
+              <span>Battery</span>
+            </div>
+            <strong style={{ color: "#f0c245" }}>91%</strong>
+          </div>
+
+          <div className="system-item">
+            <div className="system-left">
+              <span>◔</span>
+              <span>Network Status</span>
+            </div>
+            <strong style={{ color: "#9f6bff" }}>Online</strong>
+          </div>
         </div>
       </div>
 
-      <div className="border-t border-cyan-500/20 p-5">
-        <input
-          className="w-full rounded-xl bg-black/40 p-3 outline-none"
-          placeholder="Ask JARVIS anything..."
-        />
-      </div>
+      <div className="input-wrap">
+        <textarea className="textbox" placeholder="Ask me anything..." />
+        <div className="input-actions">
+          <div className="left-actions">
+            <button className="action-chip" type="button">📎 Import file</button>
+            <button className="action-chip" type="button">⚙ Tools</button>
+          </div>
 
-    </div>
+          <div className="right-actions">
+            <button className="mic-btn" type="button">🎤</button>
+            <button className="send-btn" type="button">↑</button>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

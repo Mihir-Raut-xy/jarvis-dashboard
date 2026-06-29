@@ -1,0 +1,287 @@
+.reactor-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.reactor-wrap {
+  position: relative;
+  width: min(620px, 100%);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+}
+
+.reactor-ambient {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, rgba(70, 220, 255, 0.24) 0%, rgba(70, 220, 255, 0.08) 26%, transparent 60%),
+    radial-gradient(circle at center, rgba(60, 120, 255, 0.16) 0%, transparent 68%);
+  filter: blur(28px);
+  animation: ambientPulse 4.4s ease-in-out infinite;
+}
+
+.reactor-scan {
+  position: absolute;
+  inset: 2%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(52, 223, 255, 0) 0deg,
+    rgba(52, 223, 255, 0) 290deg,
+    rgba(52, 223, 255, 0.9) 320deg,
+    rgba(52, 223, 255, 0) 360deg
+  );
+  mix-blend-mode: screen;
+  filter: blur(10px);
+  mask: radial-gradient(circle, transparent 56%, black 58%);
+  opacity: 0.7;
+  pointer-events: none;
+  animation: spin 6s linear infinite;
+}
+
+.reactor-ring {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.ring-svg,
+.core-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ring-outer {
+  inset: 0;
+  opacity: 0.92;
+  animation: spinReverse 18s linear infinite;
+}
+
+.ring-mid {
+  inset: 9%;
+  opacity: 0.88;
+  animation: spin 12s linear infinite;
+}
+
+.ring-inner {
+  inset: 21%;
+  opacity: 0.96;
+  animation: spinReverse 9s linear infinite;
+}
+
+.arc-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.lightning {
+  fill: none;
+  stroke: rgba(70, 220, 255, 0.95);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 12 12;
+  animation: flicker 2.1s linear infinite;
+}
+
+.lightning-alt {
+  stroke: rgba(88, 154, 255, 0.95);
+  animation-delay: 0.35s;
+}
+
+.lightning-soft {
+  stroke: rgba(70, 220, 255, 0.55);
+  stroke-width: 2.2;
+  stroke-dasharray: 8 14;
+  animation-delay: 0.6s;
+}
+
+.energy-flares {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.flare {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34%;
+  height: 34%;
+  transform-origin: center;
+  background: radial-gradient(circle, rgba(71, 214, 255, 0.65) 0%, rgba(71, 214, 255, 0.12) 22%, transparent 65%);
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+.flare-1 {
+  transform: translate(-50%, -50%) rotate(18deg) translateY(-112px);
+  animation: flarePulse 2.6s ease-in-out infinite;
+}
+
+.flare-2 {
+  transform: translate(-50%, -50%) rotate(92deg) translateY(-84px);
+  animation: flarePulse 3.1s ease-in-out infinite 0.3s;
+}
+
+.flare-3 {
+  transform: translate(-50%, -50%) rotate(178deg) translateY(-122px);
+  animation: flarePulse 2.8s ease-in-out infinite 0.6s;
+}
+
+.flare-4 {
+  transform: translate(-50%, -50%) rotate(268deg) translateY(-88px);
+  animation: flarePulse 3.5s ease-in-out infinite 0.9s;
+}
+
+.reactor-core-glow {
+  position: absolute;
+  width: 32%;
+  height: 32%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.98) 0%, rgba(182, 249, 255, 0.95) 22%, rgba(54, 219, 255, 0.65) 45%, rgba(22, 121, 255, 0.08) 70%, transparent 100%);
+  filter: blur(18px) brightness(1);
+  mix-blend-mode: screen;
+  box-shadow:
+    0 0 30px rgba(54, 219, 255, 0.7),
+    0 0 80px rgba(54, 219, 255, 0.4),
+    0 0 130px rgba(54, 219, 255, 0.2);
+  animation: corePulse 2.8s ease-in-out infinite;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.core-symbol {
+  position: absolute;
+  width: 39%;
+  height: 39%;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+  animation: symbolFloat 4.2s ease-in-out infinite;
+}
+
+.particle-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(146, 244, 255, 1);
+  box-shadow:
+    0 0 8px rgba(66, 219, 255, 0.95),
+    0 0 18px rgba(66, 219, 255, 0.55);
+  transform: translate(-50%, -50%);
+  animation: particlePulse 2.8s ease-in-out infinite;
+}
+
+.scanner-line {
+  position: absolute;
+  inset: 9%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 320deg,
+    rgba(255, 255, 255, 0) 325deg,
+    rgba(70, 220, 255, 0.9) 334deg,
+    rgba(255, 255, 255, 0) 342deg,
+    transparent 360deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 66%, black 68%);
+  mask: radial-gradient(circle, transparent 66%, black 68%);
+  filter: blur(2px);
+  opacity: 0.75;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: spin 7.5s linear infinite;
+}
+
+@keyframes ambientPulse {
+  0%, 100% { transform: scale(1); opacity: 0.78; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes flarePulse {
+  0%, 100% { opacity: 0.26; }
+  50% { opacity: 0.92; }
+}
+
+@keyframes corePulse {
+  0%, 100% { transform: scale(1); opacity: 0.72; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+@keyframes symbolFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.02); }
+}
+
+@keyframes particlePulse {
+  0%, 100% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.7); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.55; filter: drop-shadow(0 0 6px rgba(70,220,255,0.8)); }
+  10% { opacity: 0.95; }
+  18% { opacity: 0.35; }
+  25% { opacity: 1; }
+  42% { opacity: 0.6; }
+  55% { opacity: 0.98; }
+  74% { opacity: 0.45; }
+  86% { opacity: 1; }
+}
+
+.reactor-shell:hover .reactor-core-glow {
+  filter: blur(18px) brightness(1.15);
+  box-shadow:
+    0 0 60px rgba(54, 219, 255, 0.9),
+    0 0 140px rgba(54, 219, 255, 0.6),
+    0 0 200px rgba(54, 219, 255, 0.4);
+}
+
+.reactor-active .reactor-core-glow {
+  animation: surgePulse 1.2s ease-in-out;
+}
+
+@keyframes surgePulse {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  40% {
+    transform: scale(1.25);
+    filter: brightness(2);
+    box-shadow:
+      0 0 80px rgba(54, 219, 255, 1),
+      0 0 160px rgba(54, 219, 255, 0.8),
+      0 0 240px rgba(54, 219, 255, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}

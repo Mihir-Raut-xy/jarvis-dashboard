@@ -1,27 +1,15 @@
-"use client";
-
-import LiveClock from "@/components/LiveClock";
-
 export default function Header() {
   return (
-    <header className="flex items-center justify-between border-b border-cyan-400/20 px-10 py-6">
-
-      {/* Left */}
+    <header className="top-header">
       <div>
-        <h1 className="text-5xl font-light tracking-[0.18em] text-cyan-400">
-          JARVIS
-        </h1>
-
-        <p className="mt-2 text-sm tracking-widest text-gray-400 uppercase">
-          Artificial Intelligence Operating System
-        </p>
+        <div className="brand-title">JARVIS</div>
+        <div className="brand-subtitle">Artificial Intelligence Operating System</div>
       </div>
 
-      {/* Right */}
-      <div className="text-right">
-        <LiveClock />
+      <div className="clock-wrap">
+        <div className="clock-time">07:40:27 PM</div>
+        <div className="clock-date">Sun Jun 28 2026</div>
       </div>
-
     </header>
   );
 }
