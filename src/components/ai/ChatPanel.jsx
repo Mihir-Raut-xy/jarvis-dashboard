@@ -1,87 +1,88 @@
-export default function ChatPanel() {
+"use client";
+
+import React, { useMemo, useState } from "react";
+
+const DEFAULT_MESSAGES = [
+  {
+    id: "msg-1",
+    role: "assistant",
+    name: "JARVIS",
+    text: "All systems nominal. Ready for command input.",
+  },
+  {
+    id: "msg-2",
+    role: "user",
+    name: "Tony",
+    text: "Run a full dashboard scan.",
+  },
+  {
+    id: "msg-3",
+    role: "assistant",
+    name: "JARVIS",
+    text: "Scanning UI alignment, component stability, and interaction layers.",
+  },
+];
+
+function ChatBubble({ message }) {
+  const isUser = message.role === "user";
+
   return (
-    <section className="glass-panel chat-panel">
-      <div className="panel-header">
-        <h2 className="panel-title">AI CHAT</h2>
-        <button className="panel-pill" type="button">
-          + New Chat
+    <article className={`chat-bubble ${isUser ? "chat-bubble-user" : "chat-bubble-assistant"}`}>
+      <div className="chat-bubble-meta">
+        <span className="chat-bubble-name">{message.name}</span>
+        <span className="chat-bubble-role">{isUser ? "Operator" : "AI Core"}</span>
+      </div>
+      <p className="chat-bubble-text">{message.text}</p>
+    </article>
+  );
+}
+
+function ChatPanel() {
+  const [draft, setDraft] = useState("");
+  const messages = useMemo(() => DEFAULT_MESSAGES, []);
+
+  return (
+    <section className="chat-panel" aria-label="JARVIS chat panel">
+      <header className="chat-header">
+        <div className="chat-header-copy">
+          <p className="chat-title">Conversation</p>
+          <p className="chat-subtitle">Secure operator channel</p>
+        </div>
+
+        <div className="chat-live-indicator" aria-label="System connected">
+          <span className="status-dot" aria-hidden="true" />
+          Live
+        </div>
+      </header>
+
+      <div className="chat-stream" role="log" aria-live="polite" aria-relevant="additions text">
+        {messages.map((message) => (
+          <ChatBubble key={message.id} message={message} />
+        ))}
+      </div>
+
+      <form className="chat-composer" onSubmit={(e) => e.preventDefault()}>
+        <label className="sr-only" htmlFor="jarvis-message">
+          Enter message
+        </label>
+
+        <input
+          id="jarvis-message"
+          className="chat-input"
+          type="text"
+          value={draft}
+          placeholder="Type a command..."
+          onChange={(e) => setDraft(e.target.value)}
+          autoComplete="off"
+          spellCheck="false"
+        />
+
+        <button className="chat-send" type="submit" aria-label="Send message">
+          Send
         </button>
-      </div>
-
-      <div className="chat-body">
-        <div className="msg-row">
-          <div className="core-dot" />
-          <div className="msg-bubble">
-            <div>Hello, Mihir.</div>
-            <div>How can I assist you today?</div>
-            <div className="msg-time">07:40 PM</div>
-          </div>
-        </div>
-
-        <div className="msg-row user">
-          <div className="msg-bubble user">
-            <div>Show me system status</div>
-            <div className="msg-time">07:40 PM ✓✓</div>
-          </div>
-        </div>
-
-        <div className="msg-row">
-          <div className="core-dot" />
-          <div className="msg-bubble">
-            <div>Here is your system status.</div>
-            <div className="msg-time">07:40 PM</div>
-          </div>
-        </div>
-
-        <div className="system-card">
-          <div className="system-item">
-            <div className="system-left">
-              <span>▣</span>
-              <span>CPU Usage</span>
-            </div>
-            <strong style={{ color: "#3ad7ff" }}>18%</strong>
-          </div>
-
-          <div className="system-item">
-            <div className="system-left">
-              <span>▦</span>
-              <span>RAM Usage</span>
-            </div>
-            <strong style={{ color: "#44e29b" }}>46%</strong>
-          </div>
-
-          <div className="system-item">
-            <div className="system-left">
-              <span>🔋</span>
-              <span>Battery</span>
-            </div>
-            <strong style={{ color: "#f0c245" }}>91%</strong>
-          </div>
-
-          <div className="system-item">
-            <div className="system-left">
-              <span>◔</span>
-              <span>Network Status</span>
-            </div>
-            <strong style={{ color: "#9f6bff" }}>Online</strong>
-          </div>
-        </div>
-      </div>
-
-      <div className="input-wrap">
-        <textarea className="textbox" placeholder="Ask me anything..." />
-        <div className="input-actions">
-          <div className="left-actions">
-            <button className="action-chip" type="button">📎 Import file</button>
-            <button className="action-chip" type="button">⚙ Tools</button>
-          </div>
-
-          <div className="right-actions">
-            <button className="mic-btn" type="button">🎤</button>
-            <button className="send-btn" type="button">↑</button>
-          </div>
-        </div>
-      </div>
+      </form>
     </section>
   );
 }
+
+export default ChatPanel;
