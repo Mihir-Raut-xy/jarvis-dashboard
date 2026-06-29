@@ -1,9 +1,9 @@
 export const apps = {
-  chrome: "start chrome",
-  vscode: "code",
-  notepad: "notepad",
-  calculator: "calc",
-  paint: "mspaint",
-  explorer: "explorer",
-  cmd: "cmd",
+  chrome: { command: "chrome" },
+  vscode: { command: "code" },
+  notepad: { command: "notepad" },
+  calculator: { command: "calc" },
+  paint: { command: "mspaint" },
+  explorer: { command: "explorer" },
+  cmd: { command: "cmd" },
 };

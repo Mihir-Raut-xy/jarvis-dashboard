@@ -1,46 +1,27 @@
-import Header from "../components/Header";
-import JarvisCore from "../components/JarvisCore";
-import StatusCards from "../components/StatusCards";
-import ChatPanel from "../components/ChatPanel";
-import Background from "../components/Background";
-import SystemMonitor from "../components/SystemMonitor";
+import Header from "@/components/layout/Header";
+import Background from "@/components/layout/Background";
+import MainLayout from "@/components/layout/MainLayout";
+import Sidebar from "@/components/layout/Sidebar";
+
+import JarvisCore from "@/components/ai/JarvisCore";
+import ChatPanel from "@/components/ai/ChatPanel";
+import StatusCards from "@/components/dashboard/StatusCards";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-black text-white overflow-hidden">
-
-      {/* Animated Background */}
+    <main className="min-h-screen bg-black text-white overflow-hidden">
       <Background />
 
-      {/* Content */}
       <div className="relative z-10">
-
         <Header />
 
-        <div className="grid grid-cols-3 gap-8 px-8 py-8">
-
-          {/* Left Side */}
-          <div className="col-span-2 flex flex-col items-center justify-center gap-10">
-
-            <JarvisCore />
-
-            <button className="px-8 py-3 rounded-full border border-cyan-400 hover:bg-cyan-400 hover:text-black transition duration-300">
-              Initialize System
-            </button>
-           
-
-            <StatusCards />
-            <SystemMonitor />
-
-          </div>
-
-          {/* Right Side */}
-          <ChatPanel />
-
-        </div>
-
+        <MainLayout
+          sidebar={<Sidebar />}
+          center={<JarvisCore />}
+          right={<ChatPanel />}
+          bottom={<StatusCards />}
+        />
       </div>
-
     </main>
   );
 }

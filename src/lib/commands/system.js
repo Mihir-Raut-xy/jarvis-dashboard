@@ -1,5 +1,16 @@
 export const system = {
-  shutdown: "shutdown /s /t 0",
-  restart: "shutdown /r /t 0",
-  lock: "rundll32.exe user32.dll,LockWorkStation",
+  lock: {
+    command: "rundll32.exe",
+    args: ["user32.dll,LockWorkStation"],
+  },
+  shutdown: {
+    command: "shutdown",
+    args: ["/s", "/t", "0"],
+    requiresConfirmation: true,
+  },
+  restart: {
+    command: "shutdown",
+    args: ["/r", "/t", "0"],
+    requiresConfirmation: true,
+  },
 };

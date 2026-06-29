@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { exec } from "child_process";
 import { askGemini } from "@/lib/gemini";
 import { addFact, getMemory } from "@/lib/memory";
 import { runTool } from "@/lib/tools";
+import { runLocalAction } from "@/lib/localActions";
 
 let conversation = [];
 
@@ -12,8 +12,10 @@ export async function POST(request) {
     // Read Request
     // ==========================
     const { message } = await request.json();
+    const cleanMessage =
+      typeof message === "string" ? message.trim() : "";
 
-    if (!message || message.trim() === "") {
+    if (!cleanMessage) {
       return NextResponse.json(
         {
           reply: "Please enter a message.",
@@ -25,10 +27,19 @@ export async function POST(request) {
     // ==========================
     // Remember Command
     // ==========================
-    if (message.toLowerCase().startsWith("remember")) {
-      const fact = message
+    if (cleanMessage.toLowerCase().startsWith("remember")) {
+      const fact = cleanMessage
         .replace(/^remember( that)?/i, "")
         .trim();
+
+      if (!fact) {
+        return NextResponse.json(
+          {
+            reply: "Tell me what to remember after the word remember.",
+          },
+          { status: 400 }
+        );
+      }
 
       await addFact(fact);
 
@@ -40,17 +51,12 @@ export async function POST(request) {
     // ==========================
     // Local Tools
     // ==========================
-    const toolResult = await runTool(message);
+    const toolResult = await runTool(cleanMessage);
 
     if (toolResult?.handled) {
 
-      // Execute PC command
       if (toolResult.action) {
-        exec(toolResult.action, (error) => {
-          if (error) {
-            console.error("Command Error:", error);
-          }
-        });
+        runLocalAction(toolResult.action);
       }
 
       return NextResponse.json({
@@ -69,7 +75,7 @@ export async function POST(request) {
     // ==========================
     conversation.push({
       role: "user",
-      text: message,
+      text: cleanMessage,
     });
 
     const history = [

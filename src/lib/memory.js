@@ -3,6 +3,12 @@ import path from "path";
 
 const memoryPath = path.join(
   process.cwd(),
+  "data",
+  "jarvis-memory.json"
+);
+
+const legacyMemoryPath = path.join(
+  process.cwd(),
   "src",
   "database",
   "jarvis-memory.json"
@@ -14,7 +20,12 @@ export async function getMemory() {
     const file = await fs.readFile(memoryPath, "utf8");
     return JSON.parse(file);
   } catch (error) {
-    return { facts: [] };
+    try {
+      const legacyFile = await fs.readFile(legacyMemoryPath, "utf8");
+      return JSON.parse(legacyFile);
+    } catch {
+      return { facts: [] };
+    }
   }
 }
 
@@ -33,15 +44,22 @@ export async function saveMemory(memory) {
 // Add a new fact
 export async function addFact(fact) {
   const memory = await getMemory();
+  const facts = Array.isArray(memory.facts) ? memory.facts : [];
 
-  const exists = memory.facts.some(
+  const exists = facts.some(
     (item) => item.toLowerCase() === fact.toLowerCase()
   );
 
   if (!exists) {
-    memory.facts.push(fact);
-    await saveMemory(memory);
+    facts.push(fact);
+    await saveMemory({
+      ...memory,
+      facts,
+    });
   }
 
-  return memory;
+  return {
+    ...memory,
+    facts,
+  };
 }

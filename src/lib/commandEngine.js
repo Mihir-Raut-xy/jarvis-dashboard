@@ -7,6 +7,25 @@ export function commandEngine(message) {
   const text = message.toLowerCase().trim();
 
   // ==========================
+  // Confirm Destructive System Commands
+  // ==========================
+  for (const cmd in system) {
+    const action = system[cmd];
+
+    if (action.requiresConfirmation && text === `confirm ${cmd}`) {
+      return {
+        handled: true,
+        reply: `Confirmed. Executing ${cmd}.`,
+        action: {
+          type: "system",
+          command: action.command,
+          args: action.args,
+        },
+      };
+    }
+  }
+
+  // ==========================
   // Open Applications
   // ==========================
   for (const app in apps) {
@@ -14,7 +33,10 @@ export function commandEngine(message) {
       return {
         handled: true,
         reply: `Opening ${app}.`,
-        action: apps[app],
+        action: {
+          type: "app",
+          command: apps[app].command,
+        },
       };
     }
   }
@@ -27,7 +49,10 @@ export function commandEngine(message) {
       return {
         handled: true,
         reply: `Opening ${site}.`,
-        action: `start ${websites[site]}`,
+        action: {
+          type: "website",
+          url: websites[site],
+        },
       };
     }
   }
@@ -40,7 +65,10 @@ export function commandEngine(message) {
       return {
         handled: true,
         reply: `Opening ${folder}.`,
-        action: `explorer ${folders[folder]}`,
+        action: {
+          type: "folder",
+          path: folders[folder],
+        },
       };
     }
   }
@@ -49,11 +77,24 @@ export function commandEngine(message) {
   // System Commands
   // ==========================
   for (const cmd in system) {
+    const action = system[cmd];
+
     if (text === cmd) {
+      if (action.requiresConfirmation) {
+        return {
+          handled: true,
+          reply: `For safety, please type "confirm ${cmd}" to ${cmd} this computer.`,
+        };
+      }
+
       return {
         handled: true,
         reply: `Executing ${cmd}.`,
-        action: system[cmd],
+        action: {
+          type: "system",
+          command: action.command,
+          args: action.args,
+        },
       };
     }
   }
